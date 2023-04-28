@@ -3,11 +3,10 @@ import axios from 'axios';
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
-import './asteroid.css'
 
-Chart.register(CategoryScale);
+Chart.register(CategoryScale); 
 
-const Asteroid=()=>{
+const Awishcar=()=>{
 
     const [date,setDate]=useState({startdate:"",enddate:""})
     const [asteroidData,setAsteroidData]=useState({labels: [], datasets: []})
@@ -16,7 +15,7 @@ const Asteroid=()=>{
     const [error,setError]=useState(false)
     const [loading,setLoading]=useState(false)
     const [apierror,setApierror]=useState(false)
-
+ 
     const handleSubmit=async()=>{
         if(date.startdate==="" || date.enddate==="")
         {
@@ -52,13 +51,28 @@ const Asteroid=()=>{
     }
     console.log(asteroidData)
 
+    const handlechange= (e)=>{
+          setDate({...date,startdate:e.target.value})
+    }
+
+    const handlechange2= (e)=>{
+      setDate({...date,enddate:e.target.value})
+}
+
     return (<> 
-        <div >
-           {!loading ? <div  className="head">
-               <input value={date.startdate} className="inp-1" onChange={e=>setDate({...date,startdate:e.target.value})} type='date'/>
-               <input value={date.enddate} className="inp-2" onChange={e=>setDate({...date,enddate:e.target.value})} type='date'/>
-               <button className="btn" onClick={handleSubmit}>Submit</button>
-            </div> : <div className="loading"><h1>Please wait for a while Data is Loading......</h1></div>}
+        <div className="container ">
+           {!loading ? <form className=" d-flex flex-column justify-content-center" style={{height:"500px", width:"500px"}}>
+  <div className="mb-3">
+    <label for="start-date" class="form-label">Starting Date</label>
+    <input type="date" class="form-control" onChange={handlechange} value={date.startdate} id="startdate" aria-describedby="emailHelp"/>
+  </div>
+  <div className="mb-3">
+    <label for="end-date" class="form-label">Ending Date</label>
+    <input type="date" class="form-control" onChange={handlechange2} id="enddate"/>
+  </div>
+  <button type="submit" class="btn btn-light" onClick={handleSubmit}>Submit</button></form>
+
+           : <div className="container"><h1>Please wait for a while Data is Loading......</h1></div>} 
 
             <div style={{textAlign:"center"}}>
             {error && !date.startdate && <h1>Start date is missing</h1>}
@@ -66,9 +80,9 @@ const Asteroid=()=>{
             {apierror && <h1>The Feed date limit is only 7 Days</h1>}
             </div>
          
-   { asteroidData.labels.length ?  <div className="chart-container">
+   { asteroidData.labels.length ?  <div className="chart-container" style={{width: "80vw", margin: "auto"}}>
       <h2 style={{ textAlign: "center" }}>Asteroid Chart</h2>
-      <div className="graph-1">
+      <div className="graph-1 pt-3 pb-3">
       <Line        
        data={asteroidData}
       options={{
@@ -84,7 +98,7 @@ const Asteroid=()=>{
         }}
       />
       </div>
-      <div className="graph-2">
+      <div className="graph-2 pt-3 pb-3">
       <Line 
         data={nearestAsteroidData}
         options={{
@@ -100,7 +114,7 @@ const Asteroid=()=>{
         }}
       />
       </div>
-      <div className="graph-3">
+      <div className="graph-3 pt-3 pb-3">
       <Line
         data={fastestAsteroidData}
         options={{
@@ -118,7 +132,7 @@ const Asteroid=()=>{
       </div>
     
     </div> : null}
-    <div className="details">
+    <div className="details" style={{textAlign:"center"}}>
       
       {fastestAsteroidData.datasets.length ?  <h1>Fastest Asteroid : {fastestAsteroidData.datasets[0].data[0].y} km/h</h1> : ""}
        {nearestAsteroidData.datasets.length ?<h1>Closest Asteroid : {nearestAsteroidData.datasets[0].data[0].y}</h1> : "" }
@@ -128,4 +142,4 @@ const Asteroid=()=>{
     </>)
 }
 
-export default Asteroid;
+export default Awishcar;

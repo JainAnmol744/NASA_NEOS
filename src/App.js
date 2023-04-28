@@ -1,9 +1,9 @@
-import Asteroid from './components/Asteroid/asteroid';
+import Awishcar from "./components/Awishcar";
 
 function App() {
   return (
     <>
-        <Asteroid/>
+        <Awishcar/>
     </>
   );
 }
